@@ -1,1085 +1,851 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>RA Trading Academy | Master Forex Trading Professionally</title>
-
-<meta name="description"
-content="Join RA Trading Academy and master Forex Trading with Live Market Sessions, Price Action, Risk Management and Personal Mentorship.">
-
-<meta name="keywords"
-content="Forex Trading, Trading Academy, Price Action, Risk Management, Live Trading, Kolhapur">
-
-<meta name="author"
-content="RA Trading Academy">
-
+<title>RA Trading Academy — We Simplify Trading</title>
+<meta name="description" content="RA Trading Academy — master Forex trading through Price Action, Risk Management, Trading Psychology and live market mentorship in Kolhapur.">
+<link rel="icon" href="images/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+/* ===================== TOKENS ===================== */
+:root{
+  --ink:#0E1116;
+  --surface:#161A21;
+  --surface-2:#1E232C;
+  --line-dark: rgba(232,230,223,0.10);
+  --paper:#F3EFE6;
+  --paper-2:#EAE4D6;
+  --line-light: rgba(14,17,22,0.10);
+  --text-hi:#F3F1EA;
+  --text-lo: rgba(243,241,234,0.62);
+  --text-ink-hi:#14181C;
+  --text-ink-lo: rgba(20,24,28,0.62);
+  --bull:#22B573;
+  --bear:#E6503F;
+  --brand:#FF6B2C;
+  --brand-2:#FFB23C;
+  --display: "Space Grotesk", sans-serif;
+  --body: "Inter", sans-serif;
+  --mono: "JetBrains Mono", monospace;
+  --radius: 14px;
+  --wrap: 1180px;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--ink);
+  color:var(--text-hi);
+  font-family:var(--body);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%; display:block;}
+a{color:inherit; text-decoration:none;}
+ul{list-style:none;}
+.container{max-width:var(--wrap); margin:0 auto; padding:0 24px;}
+section{position:relative;}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
+/* dot-grid "chart paper" texture, used on dark sections */
+.grid-tex{
+  background-image:
+    radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+.grid-tex.on-paper{
+  background-image:
+    radial-gradient(rgba(14,17,22,0.10) 1px, transparent 1px);
+}
 
-<link rel="stylesheet"
-href="css/style.css">
+.eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--brand);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:14px;
+}
+.eyebrow::before{content:"▲"; font-size:9px; color:var(--bull);}
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+h1,h2,h3,h4{font-family:var(--display); font-weight:700; letter-spacing:-0.01em;}
+.section-title{max-width:640px; margin-bottom:52px;}
+.section-title h2{font-size:clamp(28px,3.6vw,42px); line-height:1.15;}
+.section-title p{margin-top:14px; font-size:16px; color:var(--text-lo);}
+.on-paper .section-title p{color:var(--text-ink-lo);}
 
+.btn{
+  font-family:var(--mono);
+  font-size:13px;
+  letter-spacing:.03em;
+  font-weight:500;
+  padding:14px 26px;
+  border-radius:8px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(135deg, var(--brand), var(--brand-2));
+  color:#141210;
+  box-shadow:0 8px 24px -8px rgba(255,107,44,.55);
+}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 12px 28px -8px rgba(255,107,44,.7);}
+.btn-secondary{
+  border:1px solid var(--line-dark);
+  color:var(--text-hi);
+}
+.btn-secondary:hover{background:var(--surface-2); border-color:rgba(255,255,255,.2);}
+.on-paper .btn-secondary{border-color:var(--line-light); color:var(--text-ink-hi);}
+.on-paper .btn-secondary:hover{background:var(--paper-2);}
+
+/* ===================== HEADER + TICKER ===================== */
+.ticker-strip{
+  background:#0A0C10;
+  border-bottom:1px solid var(--line-dark);
+  overflow:hidden;
+  height:34px;
+}
+.ticker-track{
+  display:flex;
+  gap:36px;
+  align-items:center;
+  height:34px;
+  width:max-content;
+  animation:ticker 28s linear infinite;
+}
+@keyframes ticker{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.ticker-item{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--text-lo);
+  display:flex;
+  gap:8px;
+  align-items:center;
+  white-space:nowrap;
+}
+.ticker-item b{color:var(--text-hi); font-weight:600;}
+.ticker-item.up{color:var(--bull);}
+.ticker-item.down{color:var(--bear);}
+
+header{position:sticky; top:0; z-index:100;}
+.navbar{
+  background:rgba(14,17,22,0.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line-dark);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 24px;
+  max-width:var(--wrap);
+  margin:0 auto;
+}
+.logo{display:flex; align-items:center; gap:10px;}
+.logo img{height:38px; width:38px; object-fit:contain; border-radius:8px;}
+.logo span{font-family:var(--display); font-weight:700; font-size:16px; letter-spacing:-0.01em;}
+.logo span em{color:var(--brand); font-style:normal;}
+.nav-links{display:flex; gap:30px;}
+.nav-links a{
+  font-size:14px; color:var(--text-lo);
+  transition:color .15s ease;
+  position:relative;
+}
+.nav-links a:hover{color:var(--text-hi);}
+.nav-btn{
+  font-family:var(--mono); font-size:13px; font-weight:500;
+  background:var(--brand); color:#141210;
+  padding:10px 20px; border-radius:8px;
+}
+.menu-btn{display:none; font-size:20px; cursor:pointer;}
+
+/* ===================== HERO ===================== */
+.hero{padding:88px 0 80px; position:relative;}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.05fr 0.95fr;
+  gap:56px;
+  align-items:center;
+}
+.hero h1{font-size:clamp(38px,5vw,60px); line-height:1.06;}
+.hero h1 .accent{
+  background:linear-gradient(100deg, var(--brand), var(--brand-2) 60%, var(--bull));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero p.sub{margin-top:22px; font-size:17px; color:var(--text-lo); max-width:480px;}
+.hero-actions{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+.hero-stats{
+  display:grid; grid-template-columns:repeat(3,auto);
+  gap:36px; margin-top:56px;
+  border-top:1px solid var(--line-dark); padding-top:28px;
+  max-width:460px;
+}
+.hero-stats .stat h3{font-family:var(--mono); font-size:24px; color:var(--text-hi);}
+.hero-stats .stat span{font-size:12px; color:var(--text-lo); text-transform:uppercase; letter-spacing:.06em;}
+
+/* candlestick hero visual */
+.chart-visual{
+  background:var(--surface);
+  border:1px solid var(--line-dark);
+  border-radius:18px;
+  padding:22px 22px 0;
+  position:relative;
+  overflow:hidden;
+}
+.chart-visual-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding-bottom:16px; border-bottom:1px solid var(--line-dark); margin-bottom:6px;
+}
+.chart-visual-head .dot{width:8px; height:8px; border-radius:50%; background:var(--bull); box-shadow:0 0 8px var(--bull); display:inline-block; margin-right:8px;}
+.chart-visual-head span{font-family:var(--mono); font-size:12px; color:var(--text-lo);}
+.chart-visual-head .price{font-family:var(--mono); font-size:14px; color:var(--bull); font-weight:600;}
+.candles{display:flex; align-items:flex-end; gap:9px; height:230px; padding:14px 4px 0;}
+.candle{flex:1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;}
+.candle .wick{width:2px; background:currentColor; opacity:.55;}
+.candle .body{width:100%; border-radius:2px; background:currentColor;}
+.candle.bull{color:var(--bull);}
+.candle.bear{color:var(--bear);}
+.chart-visual-foot{
+  display:flex; justify-content:space-between; padding:10px 2px 16px;
+  font-family:var(--mono); font-size:10px; color:var(--text-lo); letter-spacing:.04em;
+}
+.arrow-overlay{
+  position:absolute; right:14px; top:60px; width:130px; opacity:.9; pointer-events:none;
+}
+
+/* ===================== STATS BAND ===================== */
+.stats-band{
+  background:var(--surface);
+  border-top:1px solid var(--line-dark);
+  border-bottom:1px solid var(--line-dark);
+  padding:40px 0;
+}
+.stats-band .container{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:24px;
+}
+.stat-card{text-align:left; padding:0 20px; border-left:2px solid var(--brand);}
+.stat-card h2{font-family:var(--mono); font-size:30px; color:var(--text-hi);}
+.stat-card p{font-size:13px; color:var(--text-lo); margin-top:4px;}
+
+/* ===================== ALTERNATING SECTION RHYTHM ===================== */
+.on-dark{background:var(--ink); color:var(--text-hi);}
+.on-paper{background:var(--paper); color:var(--text-ink-hi);}
+.on-paper .text-lo{color:var(--text-ink-lo);}
+section.padded{padding:96px 0;}
+
+/* candle divider between sections — mirrors the alternating bull/bear rhythm */
+.candle-divider{
+  height:46px; display:flex; align-items:flex-end; justify-content:center; gap:6px; overflow:hidden;
+}
+.candle-divider i{width:4px; border-radius:2px;}
+.on-dark .candle-divider i:nth-child(odd){background:var(--bull); opacity:.5;}
+.on-dark .candle-divider i:nth-child(even){background:var(--bear); opacity:.35;}
+.on-paper .candle-divider i:nth-child(odd){background:var(--bull); opacity:.4;}
+.on-paper .candle-divider i:nth-child(even){background:var(--bear); opacity:.3;}
+
+/* ===================== ABOUT ===================== */
+.about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:start;}
+.about-visual{
+  border-radius:16px; overflow:hidden; border:1px solid var(--line-light);
+  background:var(--paper-2); padding:26px; position:relative;
+}
+.about-visual .roadline{
+  font-family:var(--mono); font-size:11px; color:var(--text-ink-lo); letter-spacing:.05em; margin-bottom:18px;
+}
+.mini-candles{display:flex; align-items:flex-end; gap:6px; height:150px;}
+.mini-candles i{flex:1; border-radius:2px;}
+.feature-list{display:grid; gap:22px;}
+.feature-box{
+  display:flex; gap:18px; align-items:flex-start;
+  padding:22px; border-radius:12px; background:#fff; border:1px solid var(--line-light);
+}
+.feature-box i{
+  width:42px; height:42px; border-radius:10px; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#141210; font-size:17px;
+}
+.feature-box h3{font-size:17px; margin-bottom:6px;}
+.feature-box p{font-size:14.5px; color:var(--text-ink-lo);}
+
+/* ===================== WHY US ===================== */
+.why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+.why-card{
+  padding:28px 24px; border-radius:14px;
+  background:var(--surface); border:1px solid var(--line-dark);
+  transition:transform .18s ease, border-color .18s ease;
+}
+.why-card:hover{transform:translateY(-4px); border-color:rgba(255,107,44,.4);}
+.why-card i{font-size:20px; color:var(--brand); margin-bottom:16px; display:block;}
+.why-card h3{font-size:16.5px; margin-bottom:8px;}
+.why-card p{font-size:14px; color:var(--text-lo);}
+
+/* ===================== COURSES ===================== */
+.course-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+.course-card{
+  background:var(--surface); border:1px solid var(--line-dark); border-radius:16px;
+  padding:32px 26px; display:flex; flex-direction:column; position:relative;
+}
+.course-card.featured{
+  border-color:var(--brand);
+  background:linear-gradient(180deg, rgba(255,107,44,0.08), var(--surface) 40%);
+}
+.badge{
+  position:absolute; top:-12px; left:26px;
+  background:var(--brand); color:#141210;
+  font-family:var(--mono); font-size:11px; font-weight:600;
+  padding:5px 12px; border-radius:999px; letter-spacing:.03em;
+}
+.course-icon{
+  width:46px; height:46px; border-radius:10px; margin-bottom:20px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--surface-2); color:var(--brand); font-size:18px;
+}
+.course-card h3{font-size:19px; margin-bottom:10px;}
+.course-card > p{font-size:14.5px; color:var(--text-lo); margin-bottom:20px;}
+.course-card ul{display:grid; gap:10px; margin-bottom:26px; flex:1;}
+.course-card ul li{font-size:14px; color:var(--text-hi); display:flex; gap:8px; align-items:baseline;}
+.course-card ul li::before{content:"▸"; color:var(--bull); font-family:var(--mono);}
+.course-btn{
+  text-align:center; padding:13px; border-radius:8px;
+  font-family:var(--mono); font-size:13px; font-weight:500;
+  background:var(--surface-2); border:1px solid var(--line-dark);
+  transition:background .18s ease, border-color .18s ease;
+}
+.course-card.featured .course-btn{background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#141210; border:none;}
+.course-btn:hover{background:rgba(255,255,255,0.08);}
+
+/* ===================== LIVE SESSION ===================== */
+.live-container{display:grid; grid-template-columns:1fr 0.85fr; gap:56px; align-items:center;}
+.live-tag{
+  font-family:var(--mono); font-size:12px; color:var(--bear);
+  display:inline-flex; align-items:center; gap:8px; margin-bottom:16px;
+}
+.live-dot{width:8px; height:8px; border-radius:50%; background:var(--bear); animation:pulse 1.6s infinite;}
+@keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.3;}}
+.live-left h2{font-size:clamp(26px,3.4vw,36px); margin-bottom:16px;}
+.live-left > p{color:var(--text-lo); max-width:460px; margin-bottom:28px;}
+.live-features{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:32px;}
+.live-features div{
+  display:flex; align-items:center; gap:10px; font-size:13.5px;
+  padding:12px 14px; border-radius:10px; background:var(--surface); border:1px solid var(--line-dark);
+}
+.live-features i{color:var(--bull); font-size:14px;}
+.live-right{
+  background:var(--surface); border:1px solid var(--line-dark); border-radius:16px;
+  padding:20px; height:340px; display:flex; align-items:flex-end;
+}
+.live-right .candles{height:100%;}
+
+/* ===================== ROADMAP ===================== */
+.roadmap-track{
+  display:grid; grid-template-columns:repeat(6,1fr); gap:16px;
+  position:relative;
+}
+.roadmap-track::before{
+  content:""; position:absolute; top:22px; left:0; right:0; height:1px;
+  background:var(--line-light); z-index:0;
+}
+.step{position:relative; z-index:1; background:var(--paper); padding-top:0;}
+.step .tag{
+  font-family:var(--mono); font-size:12px; color:#fff;
+  background:var(--text-ink-hi); width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; margin-bottom:18px;
+}
+.step:nth-child(odd) .tag{background:var(--bull);}
+.step:nth-child(even) .tag{background:var(--bear);}
+.step h4{font-size:15.5px; margin-bottom:6px;}
+.step p{font-size:13px; color:var(--text-ink-lo);}
+
+/* ===================== RESULTS ===================== */
+.results-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+.result-card{
+  padding:30px; border-radius:14px; background:var(--surface); border:1px solid var(--line-dark);
+}
+.result-card i{color:var(--bull); font-size:20px; margin-bottom:16px; display:block;}
+.result-card h3{font-size:17px; margin-bottom:8px;}
+.result-card p{font-size:14px; color:var(--text-lo);}
+
+/* ===================== TESTIMONIALS ===================== */
+.testimonial-slider{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+.testimonial-card{
+  background:#fff; border:1px solid var(--line-light); border-radius:14px; padding:26px;
+}
+.stars{color:var(--brand); font-size:13px; letter-spacing:2px; margin-bottom:14px; display:block;}
+.testimonial-card p{font-size:14.5px; color:var(--text-ink-hi); margin-bottom:18px;}
+.testimonial-card h4{font-family:var(--mono); font-size:12.5px; color:var(--text-ink-lo); font-weight:500;}
+
+/* ===================== CONTACT ===================== */
+.contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px;}
+.contact-info h3{font-size:22px; margin-bottom:20px;}
+.contact-info p{
+  display:flex; gap:12px; align-items:flex-start; font-size:14.5px; color:var(--text-lo);
+  margin-bottom:16px;
+}
+.contact-info p i{color:var(--brand); margin-top:3px;}
+.contact-info .btn-primary{margin-top:10px;}
+form{display:grid; gap:14px;}
+form input, form textarea{
+  width:100%; padding:14px 16px; border-radius:10px;
+  background:var(--surface); border:1px solid var(--line-dark);
+  color:var(--text-hi); font-family:var(--body); font-size:14.5px;
+}
+form input::placeholder, form textarea::placeholder{color:var(--text-lo);}
+form input:focus, form textarea:focus, .btn:focus-visible, a:focus-visible{
+  outline:2px solid var(--brand); outline-offset:2px;
+}
+form button{
+  border:none; cursor:pointer; font-family:var(--mono); font-size:13px; font-weight:500;
+  background:linear-gradient(135deg, var(--brand), var(--brand-2)); color:#141210;
+  padding:15px; border-radius:10px;
+}
+
+/* ===================== FOOTER ===================== */
+footer{background:#0A0C10; padding:60px 0 26px; border-top:1px solid var(--line-dark);}
+.footer-content{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; margin-bottom:40px;}
+.footer-content img{height:34px; margin-bottom:14px;}
+.footer-content p{font-size:13.5px; color:var(--text-lo); max-width:280px;}
+.footer-content h4{font-size:14px; margin-bottom:16px;}
+.footer-content ul{display:grid; gap:10px;}
+.footer-content ul li a{font-size:13.5px; color:var(--text-lo);}
+.footer-content ul li a:hover{color:var(--text-hi);}
+.footer-content .socials{display:flex; gap:14px;}
+.footer-content .socials a{
+  width:36px; height:36px; border-radius:8px; border:1px solid var(--line-dark);
+  display:flex; align-items:center; justify-content:center;
+}
+footer hr{border:none; border-top:1px solid var(--line-dark); margin-bottom:20px;}
+footer .fine{text-align:center; font-size:12.5px; color:var(--text-lo); font-family:var(--mono);}
+
+/* whatsapp float */
+.wa-float{
+  position:fixed; bottom:24px; right:24px; z-index:200;
+  width:56px; height:56px; border-radius:50%;
+  background:#25D366; color:#fff; font-size:24px;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 24px -6px rgba(37,211,102,.6);
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 980px){
+  .nav-links{display:none;}
+  .menu-btn{display:block;}
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-right{order:-1;}
+  .about-grid, .live-container, .contact-grid{grid-template-columns:1fr;}
+  .why-grid, .course-grid, .results-grid, .testimonial-slider{grid-template-columns:repeat(2,1fr);}
+  .roadmap-track{grid-template-columns:repeat(3,1fr); row-gap:36px;}
+  .roadmap-track::before{display:none;}
+  .stats-band .container{grid-template-columns:repeat(2,1fr); row-gap:24px;}
+}
+@media (max-width: 600px){
+  .why-grid, .course-grid, .results-grid, .testimonial-slider{grid-template-columns:1fr;}
+  .roadmap-track{grid-template-columns:repeat(2,1fr);}
+  .hero-stats{grid-template-columns:repeat(3,auto); gap:20px;}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  .ticker-track{animation:none;}
+  .live-dot{animation:none;}
+}
+</style>
 </head>
-
 <body>
 
-<div class="loader">
-
-<div class="spinner"></div>
-
+<div class="ticker-strip">
+  <div class="ticker-track" id="tickerTrack"></div>
 </div>
 
 <header>
-
-<nav class="navbar">
-
-<div class="logo">
-
-<img src="images/logo.png" alt="RA Trading Academy">
-
-</div>
-
-<ul class="nav-links">
-
-<li><a href="#home">Home</a></li>
-
-<li><a href="#about">About</a></li>
-
-<li><a href="#courses">Courses</a></li>
-
-<li><a href="#live">Live Sessions</a></li>
-
-<li><a href="#results">Results</a></li>
-
-<li><a href="#reviews">Testimonials</a></li>
-
-<li><a href="#faq">FAQ</a></li>
-
-<li><a href="#contact">Contact</a></li>
-
-</ul>
-
-<a href="https://wa.me/919665420707" class="nav-btn">
-
-Enroll Now
-
-</a>
-
-<div class="menu-btn">
-
-<i class="fa-solid fa-bars"></i>
-
-</div>
-
-</nav>
-
+  <nav class="navbar">
+    <a href="#home" class="logo">
+      <img src="images/logo.png" alt="RA Trading Academy logo">
+      <span>RA <em>TRADING</em> ACADEMY</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#live">Live Sessions</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#reviews">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="https://wa.me/919665420707" class="nav-btn">Enroll Now</a>
+    <div class="menu-btn" id="menuBtn"><i class="fa-solid fa-bars"></i></div>
+  </nav>
 </header>
 
-<section class="hero" id="home">
-
-<div class="hero-bg"></div>
-
-<div class="floating-circle circle1"></div>
-
-<div class="floating-circle circle2"></div>
-
-<div class="floating-circle circle3"></div>
-
-<div class="container">
-
-<div class="hero-left">
-
-<span class="hero-tag">
-
-FOREX EDUCATION • LIVE MENTORSHIP
-
-</span>
-
-<h1>
-
-Become a
-
-<span>Consistently</span>
-
-Profitable
-
-Forex Trader
-
-</h1>
-
-<p>
-
-Master Price Action, Risk Management,
-
-Trading Psychology and Live Market Execution
-
-with RA Trading Academy.
-
-</p>
-
-<div class="hero-buttons">
-
-<a href="https://wa.me/919665420707"
-
-class="btn-primary">
-
-Join WhatsApp
-
-</a>
-
-<a href="#courses"
-
-class="btn-secondary">
-
-Explore Courses
-
-</a>
-
-</div>
-
-<div class="hero-stats">
-
-<div>
-
-<h2>1000+</h2>
-
-<p>Students</p>
-
-</div>
-
-<div>
-
-<h2>Live</h2>
-
-<p>Market Sessions</p>
-
-</div>
-
-<div>
-
-<h2>24×7</h2>
-
-<p>Support</p>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="hero-right">
-
-<div class="trading-card">
-
-<div class="card-header">
-
-<span class="green-dot"></span>
-
-Live Market Analysis
-
-</div>
-
-<img src="images/trading-screen.png"
-
-alt="Trading Screen">
-
-<div class="profit-box">
-
-<h3>Professional Trading</h3>
-
-<p>
-
-Learn how professionals analyse the Forex Market
-
-using Price Action and Risk Management.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="scroll-down">
-
-<i class="fa-solid fa-chevron-down"></i>
-
-</div>
-
-</section>
-<!-- ===========================
-     Statistics Section
-============================ -->
-
-<section class="stats-section">
-
-    <div class="container stats-container">
-
-        <div class="stat-card">
-            <i class="fa-solid fa-user-graduate"></i>
-            <h2 class="counter" data-target="1000">0</h2>
-            <p>Students Trained</p>
-        </div>
-
-        <div class="stat-card">
-            <i class="fa-solid fa-chart-line"></i>
-            <h2>Live</h2>
-            <p>Market Sessions</p>
-        </div>
-
-        <div class="stat-card">
-            <i class="fa-solid fa-shield-halved"></i>
-            <h2>24×7</h2>
-            <p>Community Support</p>
-        </div>
-
-        <div class="stat-card">
-            <i class="fa-solid fa-award"></i>
-            <h2>100%</h2>
-            <p>Practical Learning</p>
-        </div>
-
+<!-- ===================== HERO ===================== -->
+<section class="hero on-dark grid-tex" id="home">
+  <div class="container hero-grid">
+    <div class="hero-left">
+      <span class="eyebrow">Forex Education · Kolhapur</span>
+      <h1>Read the chart<br>before you<br><span class="accent">risk the capital.</span></h1>
+      <p class="sub">RA Trading Academy trains you in Price Action, Risk Management and Trading Psychology — through live market sessions, not recorded theory.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/919665420707" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Join on WhatsApp</a>
+        <a href="#courses" class="btn btn-secondary">Explore courses</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><h3>1000+</h3><span>Students trained</span></div>
+        <div class="stat"><h3>LIVE</h3><span>Market sessions</span></div>
+        <div class="stat"><h3>24×7</h3><span>Community support</span></div>
+      </div>
     </div>
 
-</section>
-
-<!-- ===========================
-      About Section
-============================ -->
-
-<section class="about" id="about">
-
-<div class="container">
-
-<div class="section-title">
-
-<span>ABOUT RA TRADING ACADEMY</span>
-
-<h2>
-Learn Forex Trading the Professional Way
-</h2>
-
-<p>
-
-RA Trading Academy helps aspiring traders build confidence through
-Price Action, Risk Management, Trading Psychology and Live Market
-Learning.
-
-We don't believe in shortcuts.
-
-We believe in creating disciplined traders who understand the market.
-
-</p>
-
-</div>
-
-<div class="about-grid">
-
-<div class="about-image">
-
-<img src="images/about-trader.png" alt="RA Trading Academy">
-
-</div>
-
-<div class="about-content">
-
-<div class="feature-box">
-
-<i class="fa-solid fa-chart-line"></i>
-
-<div>
-
-<h3>Price Action Trading</h3>
-
-<p>
-
-Master professional chart reading techniques
-without depending on indicators.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="feature-box">
-
-<i class="fa-solid fa-shield"></i>
-
-<div>
-
-<h3>Risk Management</h3>
-
-<p>
-
-Learn proper position sizing and capital
-protection to become a disciplined trader.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="feature-box">
-
-<i class="fa-solid fa-brain"></i>
-
-<div>
-
-<h3>Trading Psychology</h3>
-
-<p>
-
-Control emotions, remove fear and greed,
-and develop a winning mindset.
-
-</p>
-
-</div>
-
-</div>
-
-<div class="feature-box">
-
-<i class="fa-solid fa-laptop"></i>
-
-<div>
-
-<h3>Live Market Sessions</h3>
-
-<p>
-
-Watch real-time market analysis and
-understand how professionals execute trades.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ===========================
-      Why Choose Us
-============================ -->
-
-<section class="why-us">
-
-<div class="container">
-
-<div class="section-title">
-
-<span>WHY CHOOSE US</span>
-
-<h2>
-Why Thousands Choose RA Trading Academy
-</h2>
-
-</div>
-
-<div class="why-grid">
-
-<div class="why-card">
-
-<i class="fa-solid fa-book-open"></i>
-
-<h3>Beginner Friendly</h3>
-
-<p>
-
-Start from zero and learn step-by-step.
-
-</p>
-
-</div>
-
-<div class="why-card">
-
-<i class="fa-solid fa-video"></i>
-
-<h3>Live Market Sessions</h3>
-
-<p>
-
-Watch the market live with mentor guidance.
-
-</p>
-
-</div>
-
-<div class="why-card">
-
-<i class="fa-solid fa-users"></i>
-
-<h3>Lifetime Community</h3>
-
-<p>
-
-Stay connected with traders and mentors.
-
-</p>
-
-</div>
-
-<div class="why-card">
-
-<i class="fa-solid fa-handshake"></i>
-
-<h3>Personal Mentorship</h3>
-
-<p>
-
-Individual guidance to improve your trading.
-
-</p>
-
-</div>
-
-<div class="why-card">
-
-<i class="fa-solid fa-chart-pie"></i>
-
-<h3>Risk Management</h3>
-
-<p>
-
-Protect your capital before focusing on profits.
-
-</p>
-
-</div>
-
-<div class="why-card">
-
-<i class="fa-solid fa-lightbulb"></i>
-
-<h3>Practical Learning</h3>
-
-<p>
-
-Real market examples instead of only theory.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- ===========================
-        OUR COURSES
-=========================== -->
-
-<section class="courses" id="courses">
-
-    <div class="container">
-
-        <div class="section-title">
-
-            <span>OUR COURSES</span>
-
-            <h2>Choose Your Trading Journey</h2>
-
-            <p>
-                Whether you're a complete beginner or looking to refine your
-                strategy, RA Trading Academy has the right mentorship program
-                for you.
-            </p>
-
+    <div class="hero-right">
+      <div class="chart-visual">
+        <div class="chart-visual-head">
+          <span><span class="dot"></span>XAU/USD · live session view</span>
+          <span class="price">▲ trending</span>
         </div>
-
-        <div class="course-grid">
-
-            <div class="course-card">
-
-                <div class="course-icon">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-
-                <h3>Forex Beginner Program</h3>
-
-                <p>
-                    Learn Forex Trading from scratch with step-by-step
-                    guidance and practical examples.
-                </p>
-
-                <ul>
-
-                    <li>✔ Forex Basics</li>
-
-                    <li>✔ Market Structure</li>
-
-                    <li>✔ Candlestick Patterns</li>
-
-                    <li>✔ TradingView Setup</li>
-
-                    <li>✔ Live Doubt Solving</li>
-
-                </ul>
-
-                <a href="https://wa.me/919665420707" class="course-btn">
-
-                    Enroll Now
-
-                </a>
-
-            </div>
-
-            <div class="course-card featured">
-
-                <span class="badge">Most Popular</span>
-
-                <div class="course-icon">
-
-                    <i class="fa-solid fa-chart-line"></i>
-
-                </div>
-
-                <h3>Advanced Mentorship</h3>
-
-                <p>
-
-                    Master professional trading with live mentorship,
-                    price action, psychology and risk management.
-
-                </p>
-
-                <ul>
-
-                    <li>✔ Institutional Concepts</li>
-
-                    <li>✔ Live Trading Sessions</li>
-
-                    <li>✔ Risk Management</li>
-
-                    <li>✔ Psychology</li>
-
-                    <li>✔ Community Support</li>
-
-                </ul>
-
-                <a href="https://wa.me/919665420707" class="course-btn">
-
-                    Join Today
-
-                </a>
-
-            </div>
-
-            <div class="course-card">
-
-                <div class="course-icon">
-
-                    <i class="fa-solid fa-users"></i>
-
-                </div>
-
-                <h3>Trading Community</h3>
-
-                <p>
-
-                    Daily market discussions,
-                    analysis and learning with traders.
-
-                </p>
-
-                <ul>
-
-                    <li>✔ Live Analysis</li>
-
-                    <li>✔ Weekly Q&A</li>
-
-                    <li>✔ Trade Reviews</li>
-
-                    <li>✔ Market Updates</li>
-
-                    <li>✔ Lifetime Access</li>
-
-                </ul>
-
-                <a href="https://wa.me/919665420707" class="course-btn">
-
-                    Join Community
-
-                </a>
-
-            </div>
-
+        <div class="candles" id="heroCandles"></div>
+        <div class="chart-visual-foot">
+          <span>09:15</span><span>10:30</span><span>12:00</span><span>13:45</span><span>15:20</span>
         </div>
-
+      </div>
     </div>
-
+  </div>
 </section>
 
-
-
-<!-- ===========================
-      LIVE MARKET SESSION
-=========================== -->
-
-<section class="live-session" id="live">
-
-<div class="container live-container">
-
-<div class="live-left">
-
-<span class="live-tag">
-
-🔴 LIVE MARKET SESSION
-
-</span>
-
-<h2>
-
-Trade Live with Professional Guidance
-
-</h2>
-
-<p>
-
-Every session is focused on real market learning.
-Watch professional chart analysis,
-trade planning,
-entry confirmation,
-risk management,
-and psychology in real time.
-
-</p>
-
-<div class="live-features">
-
-<div>
-
-<i class="fa-solid fa-chart-area"></i>
-
-<span>Live Market Analysis</span>
-
-</div>
-
-<div>
-
-<i class="fa-solid fa-arrow-trend-up"></i>
-
-<span>Entry & Exit Strategy</span>
-
-</div>
-
-<div>
-
-<i class="fa-solid fa-shield-halved"></i>
-
-<span>Risk Management</span>
-
-</div>
-
-<div>
-
-<i class="fa-solid fa-brain"></i>
-
-<span>Trading Psychology</span>
-
-</div>
-
-<div>
-
-<i class="fa-solid fa-comments"></i>
-
-<span>Live Q&A</span>
-
-</div>
-
-<div>
-
-<i class="fa-solid fa-users"></i>
-
-<span>Community Support</span>
-
-</div>
-
-</div>
-
-<a href="https://wa.me/919665420707"
-
-class="btn-primary">
-
-Reserve Your Seat
-
-</a>
-
-</div>
-
-<div class="live-right">
-
-<img src="images/live-session.png"
-
-alt="Live Trading Session">
-
-</div>
-
-</div>
-
+<!-- ===================== STATS BAND ===================== -->
+<section class="stats-band on-dark">
+  <div class="container">
+    <div class="stat-card"><h2>1000+</h2><p>Students trained</p></div>
+    <div class="stat-card"><h2>100%</h2><p>Practical, chart-first learning</p></div>
+    <div class="stat-card"><h2>Daily</h2><p>Live market breakdowns</p></div>
+    <div class="stat-card"><h2>24×7</h2><p>Community &amp; mentor access</p></div>
+  </div>
 </section>
 
-
-
-<!-- ===========================
-        LEARNING ROADMAP
-=========================== -->
-
-<section class="roadmap">
-
-<div class="container">
-
-<div class="section-title">
-
-<span>LEARNING ROADMAP</span>
-
-<h2>
-
-Your Journey To Becoming A Professional Trader
-
-</h2>
-
-</div>
-
-<div class="timeline">
-
-<div class="step">
-
-<h3>01</h3>
-
-<h4>Forex Basics</h4>
-
-<p>Understand the market from zero.</p>
-
-</div>
-
-<div class="step">
-
-<h3>02</h3>
-
-<h4>Price Action</h4>
-
-<p>Master candlesticks and chart reading.</p>
-
-</div>
-
-<div class="step">
-
-<h3>03</h3>
-
-<h4>Market Structure</h4>
-
-<p>Understand trend and market behaviour.</p>
-
-</div>
-
-<div class="step">
-
-<h3>04</h3>
-
-<h4>Risk Management</h4>
-
-<p>Protect your capital before chasing profits.</p>
-
-</div>
-
-<div class="step">
-
-<h3>05</h3>
-
-<h4>Trading Psychology</h4>
-
-<p>Develop discipline and emotional control.</p>
-
-</div>
-
-<div class="step">
-
-<h3>06</h3>
-
-<h4>Independent Trader</h4>
-
-<p>Trade confidently with your own strategy.</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-  <!-- ===========================
-        STUDENT RESULTS
-=========================== -->
-
-<section class="results" id="results">
-
-    <div class="container">
-
-        <div class="section-title">
-            <span>STUDENT SUCCESS</span>
-            <h2>Our Students' Growth</h2>
-            <p>Our focus is on building disciplined traders through practical education and consistent learning.</p>
-        </div>
-
-        <div class="results-grid">
-
-            <div class="result-card">
-                <i class="fa-solid fa-chart-line"></i>
-                <h3>Price Action Mastery</h3>
-                <p>Learn to read the market confidently without relying on unnecessary indicators.</p>
-            </div>
-
-            <div class="result-card">
-                <i class="fa-solid fa-arrow-trend-up"></i>
-                <h3>Consistent Growth</h3>
-                <p>Develop structured trading habits with proper risk management and psychology.</p>
-            </div>
-
-            <div class="result-card">
-                <i class="fa-solid fa-user-group"></i>
-                <h3>Mentorship</h3>
-                <p>Continuous guidance from experienced mentors through live sessions and reviews.</p>
-            </div>
-
-        </div>
-
+<!-- ===================== ABOUT ===================== -->
+<section class="about on-paper grid-tex on-paper padded" id="about">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">About the academy</span>
+      <h2>We don't teach shortcuts. We teach the chart.</h2>
+      <p class="text-lo">RA Trading Academy builds disciplined traders through Price Action, Risk Management, Trading Psychology and live market practice — the same process, repeated until it's instinct.</p>
     </div>
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="roadline">// what discipline looks like on a chart</div>
+        <div class="mini-candles" id="aboutCandles"></div>
+      </div>
+      <div class="feature-list">
+        <div class="feature-box">
+          <i class="fa-solid fa-chart-line"></i>
+          <div><h3>Price Action Trading</h3><p>Read candles and structure directly — no dependence on lagging indicators.</p></div>
+        </div>
+        <div class="feature-box">
+          <i class="fa-solid fa-shield"></i>
+          <div><h3>Risk Management</h3><p>Size every position and protect capital before you ever think about profit.</p></div>
+        </div>
+        <div class="feature-box">
+          <i class="fa-solid fa-brain"></i>
+          <div><h3>Trading Psychology</h3><p>Remove fear and greed from your execution with a repeatable process.</p></div>
+        </div>
+        <div class="feature-box">
+          <i class="fa-solid fa-laptop"></i>
+          <div><h3>Live Market Sessions</h3><p>Watch trades planned and placed in real time, then do it yourself.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="candle-divider on-paper" id="divider1"></div>
 
+<!-- ===================== WHY US ===================== -->
+<section class="why-us on-dark grid-tex padded">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Why RA</span>
+      <h2>Why thousands choose RA Trading Academy</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><i class="fa-solid fa-book-open"></i><h3>Beginner friendly</h3><p>Start from zero — every concept is built step by step.</p></div>
+      <div class="why-card"><i class="fa-solid fa-video"></i><h3>Live market sessions</h3><p>Watch the market unfold live, with a mentor talking through every move.</p></div>
+      <div class="why-card"><i class="fa-solid fa-users"></i><h3>Lifetime community</h3><p>Stay connected with traders and mentors long after the course ends.</p></div>
+      <div class="why-card"><i class="fa-solid fa-handshake"></i><h3>Personal mentorship</h3><p>One-on-one guidance built around your own trading gaps.</p></div>
+      <div class="why-card"><i class="fa-solid fa-chart-pie"></i><h3>Risk management first</h3><p>Capital protection comes before any conversation about profit.</p></div>
+      <div class="why-card"><i class="fa-solid fa-lightbulb"></i><h3>Practical learning</h3><p>Real market examples — not theory slides recycled every batch.</p></div>
+    </div>
+  </div>
 </section>
 
-<!-- ===========================
-      TESTIMONIALS
-=========================== -->
-
-<section class="testimonials" id="reviews">
-
-<div class="container">
-
-<div class="section-title">
-
-<span>TESTIMONIALS</span>
-
-<h2>What Our Students Say</h2>
-
-</div>
-
-<div class="testimonial-slider">
-
-<div class="testimonial-card">
-
-<p>
-
-★★★★★
-
-<br><br>
-
-"Excellent mentorship. The live sessions helped me understand market structure and improve my confidence."
-
-</p>
-
-<h4>Student</h4>
-
-</div>
-
-<div class="testimonial-card">
-
-<p>
-
-★★★★★
-
-<br><br>
-
-"Risk management lessons completely changed my approach to trading."
-
-</p>
-
-<h4>Student</h4>
-
-</div>
-
-<div class="testimonial-card">
-
-<p>
-
-★★★★★
-
-<br><br>
-
-"Very practical teaching style with real market examples."
-
-</p>
-
-<h4>Student</h4>
-
-</div>
-
-</div>
-
-</div>
-
+<!-- ===================== COURSES ===================== -->
+<section class="courses on-dark padded" id="courses" style="padding-top:0;">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Programs</span>
+      <h2>Choose your trading journey</h2>
+      <p>Whether you're starting at zero or refining an existing strategy, there's a mentorship track built for where you are.</p>
+    </div>
+    <div class="course-grid">
+      <div class="course-card">
+        <div class="course-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3>Forex Beginner Program</h3>
+        <p>Learn Forex from scratch with step-by-step guidance and practical examples.</p>
+        <ul>
+          <li>Forex basics</li>
+          <li>Market structure</li>
+          <li>Candlestick patterns</li>
+          <li>TradingView setup</li>
+          <li>Live doubt-solving</li>
+        </ul>
+        <a href="https://wa.me/919665420707" class="course-btn">Enroll now</a>
+      </div>
+      <div class="course-card featured">
+        <span class="badge">Most popular</span>
+        <div class="course-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>Advanced Mentorship</h3>
+        <p>Master professional trading with live mentorship, price action, psychology and risk management.</p>
+        <ul>
+          <li>Institutional concepts</li>
+          <li>Live trading sessions</li>
+          <li>Risk management</li>
+          <li>Trading psychology</li>
+          <li>Community support</li>
+        </ul>
+        <a href="https://wa.me/919665420707" class="course-btn">Join today</a>
+      </div>
+      <div class="course-card">
+        <div class="course-icon"><i class="fa-solid fa-users"></i></div>
+        <h3>Trading Community</h3>
+        <p>Daily market discussion, analysis and learning alongside other traders.</p>
+        <ul>
+          <li>Live analysis</li>
+          <li>Weekly Q&amp;A</li>
+          <li>Trade reviews</li>
+          <li>Market updates</li>
+          <li>Lifetime access</li>
+        </ul>
+        <a href="https://wa.me/919665420707" class="course-btn">Join community</a>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ===========================
-      CONTACT
-=========================== -->
+<!-- ===================== LIVE SESSION ===================== -->
+<section class="live-session on-dark padded" id="live">
+  <div class="container live-container">
+    <div class="live-left">
+      <span class="live-tag"><span class="live-dot"></span>LIVE MARKET SESSION</span>
+      <h2>Trade live, with guidance in real time</h2>
+      <p>Every session covers real market learning — chart analysis, trade planning, entry confirmation, risk management and psychology, as it happens.</p>
+      <div class="live-features">
+        <div><i class="fa-solid fa-chart-area"></i><span>Live market analysis</span></div>
+        <div><i class="fa-solid fa-arrow-trend-up"></i><span>Entry &amp; exit strategy</span></div>
+        <div><i class="fa-solid fa-shield-halved"></i><span>Risk management</span></div>
+        <div><i class="fa-solid fa-brain"></i><span>Trading psychology</span></div>
+        <div><i class="fa-solid fa-comments"></i><span>Live Q&amp;A</span></div>
+        <div><i class="fa-solid fa-users"></i><span>Community support</span></div>
+      </div>
+      <a href="https://wa.me/919665420707" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Reserve your seat</a>
+    </div>
+    <div class="live-right">
+      <div class="candles" id="liveCandles"></div>
+    </div>
+  </div>
+</section>
 
-<section class="contact" id="contact">
+<!-- ===================== ROADMAP ===================== -->
+<section class="roadmap on-paper grid-tex on-paper padded">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Learning roadmap</span>
+      <h2>Your path to becoming an independent trader</h2>
+    </div>
+    <div class="roadmap-track">
+      <div class="step"><div class="tag">01</div><h4>Forex basics</h4><p>Understand the market from zero.</p></div>
+      <div class="step"><div class="tag">02</div><h4>Price action</h4><p>Master candlesticks and chart reading.</p></div>
+      <div class="step"><div class="tag">03</div><h4>Market structure</h4><p>Understand trend and market behaviour.</p></div>
+      <div class="step"><div class="tag">04</div><h4>Risk management</h4><p>Protect capital before chasing profit.</p></div>
+      <div class="step"><div class="tag">05</div><h4>Trading psychology</h4><p>Build discipline and emotional control.</p></div>
+      <div class="step"><div class="tag">06</div><h4>Independent trader</h4><p>Trade confidently with your own strategy.</p></div>
+    </div>
+  </div>
+</section>
+<div class="candle-divider on-paper" id="divider2"></div>
 
-<div class="container">
+<!-- ===================== RESULTS ===================== -->
+<section class="results on-dark padded" id="results">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Student success</span>
+      <h2>What our students grow into</h2>
+      <p>Practical education and consistent live-market repetition — not one-off webinars.</p>
+    </div>
+    <div class="results-grid">
+      <div class="result-card"><i class="fa-solid fa-chart-line"></i><h3>Price action mastery</h3><p>Read the market confidently, without relying on unnecessary indicators.</p></div>
+      <div class="result-card"><i class="fa-solid fa-arrow-trend-up"></i><h3>Consistent process</h3><p>Structured habits built on proper risk management and psychology.</p></div>
+      <div class="result-card"><i class="fa-solid fa-user-group"></i><h3>Ongoing mentorship</h3><p>Continuous guidance through live sessions and trade reviews.</p></div>
+    </div>
+  </div>
+</section>
 
-<div class="section-title">
+<!-- ===================== TESTIMONIALS ===================== -->
+<section class="testimonials on-paper padded" id="reviews">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Testimonials</span>
+      <h2>What our students say</h2>
+    </div>
+    <div class="testimonial-slider">
+      <div class="testimonial-card"><span class="stars">★★★★★</span><p>"Excellent mentorship. The live sessions helped me understand market structure and improve my confidence."</p><h4>— Student, Advanced Mentorship</h4></div>
+      <div class="testimonial-card"><span class="stars">★★★★★</span><p>"Risk management lessons completely changed my approach to trading."</p><h4>— Student, Forex Beginner Program</h4></div>
+      <div class="testimonial-card"><span class="stars">★★★★★</span><p>"Very practical teaching style with real market examples."</p><h4>— Student, Trading Community</h4></div>
+    </div>
+  </div>
+</section>
 
-<span>CONTACT US</span>
-
-<h2>Start Your Trading Journey Today</h2>
-
-</div>
-
-<div class="contact-grid">
-
-<div>
-
-<h3>RA Trading Academy</h3>
-
-<p><i class="fa-solid fa-location-dot"></i> Rajlaxmi Chambers, Bus Route, B-1, 10th Ln, Poorvarang, Mahalaxminagar, Rajarampuri, Kolhapur, Maharashtra 416008</p>
-
-<p><i class="fa-solid fa-phone"></i> +91 96654 20707</p>
-
-<p><i class="fa-solid fa-envelope"></i> vishvajeetmane07@gmail.com</p>
-
-<p><i class="fa-brands fa-instagram"></i> @ra_trading_academy</p>
-
-<a href="https://wa.me/919665420707" class="btn-primary">
-
-Chat on WhatsApp
-
-</a>
-
-</div>
-
-<div>
-
-<form>
-
-<input type="text" placeholder="Your Name" required>
-
-<input type="email" placeholder="Email Address" required>
-
-<input type="tel" placeholder="Phone Number">
-
-<textarea rows="5" placeholder="Your Message"></textarea>
-
-<button class="btn-primary">
-
-Send Message
-
-</button>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
+<!-- ===================== CONTACT ===================== -->
+<section class="contact on-dark grid-tex padded" id="contact">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Contact</span>
+      <h2>Start your trading journey today</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>RA Trading Academy</h3>
+        <p><i class="fa-solid fa-location-dot"></i> Rajlaxmi Chambers, Bus Route, B-1, 10th Ln, Poorvarang, Mahalaxminagar, Rajarampuri, Kolhapur, Maharashtra 416008</p>
+        <p><i class="fa-solid fa-phone"></i> +91 96654 20707</p>
+        <p><i class="fa-solid fa-envelope"></i> vishvajeetmane07@gmail.com</p>
+        <p><i class="fa-brands fa-instagram"></i> @ra_trading_academy</p>
+        <a href="https://wa.me/919665420707" class="btn btn-primary"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
+      </div>
+      <div>
+        <form onsubmit="return false;">
+          <input type="text" placeholder="Your name" required>
+          <input type="email" placeholder="Email address" required>
+          <input type="tel" placeholder="Phone number">
+          <textarea rows="5" placeholder="Your message"></textarea>
+          <button class="btn-primary">Send message</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
-
-<div class="container">
-
-<div class="footer-content">
-
-<div>
-
-<img src="images/logo.png" width="120">
-
-<p>
-
-We Simplify Trading.
-
-Professional Forex Education with Practical Learning.
-
-</p>
-
-</div>
-
-<div>
-
-<h4>Quick Links</h4>
-
-<ul>
-
-<li><a href="#about">About</a></li>
-
-<li><a href="#courses">Courses</a></li>
-
-<li><a href="#contact">Contact</a></li>
-
-<li><a href="#faq">FAQ</a></li>
-
-</ul>
-
-</div>
-
-<div>
-
-<h4>Follow Us</h4>
-
-<a href="#"><i class="fab fa-instagram"></i></a>
-
-<a href="#"><i class="fab fa-whatsapp"></i></a>
-
-<a href="#"><i class="fab fa-youtube"></i></a>
-
-</div>
-
-</div>
-
-<hr>
-
-<p style="text-align:center;">
-
-© 2026 RA Trading Academy. All Rights Reserved.
-
-</p>
-
-</div>
-
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <img src="images/logo.png" alt="RA Trading Academy logo">
+        <p>We simplify trading. Professional Forex education with practical, live-market learning.</p>
+      </div>
+      <div>
+        <h4>Quick links</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow us</h4>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://wa.me/919665420707" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <p class="fine">© 2026 RA Trading Academy. All rights reserved.</p>
+  </div>
 </footer>
 
-<script src="js/script.js"></script>
+<a href="https://wa.me/919665420707" class="wa-float" aria-label="Chat on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 
+<script>
+// mobile menu
+document.getElementById('menuBtn').addEventListener('click', ()=>{
+  const nav = document.querySelector('.nav-links');
+  nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
+  nav.style.cssText += 'position:absolute;top:64px;left:0;right:0;background:#0E1116;flex-direction:column;padding:20px 24px;gap:16px;border-bottom:1px solid rgba(232,230,223,0.1);';
+});
+
+// ticker tape data
+const pairs = [
+  {p:'EUR/USD', v:'1.0842', up:true, chg:'+0.24%'},
+  {p:'GBP/USD', v:'1.2715', up:false, chg:'-0.11%'},
+  {p:'USD/JPY', v:'152.30', up:true, chg:'+0.18%'},
+  {p:'XAU/USD', v:'2,398.5', up:true, chg:'+0.62%'},
+  {p:'USD/INR', v:'83.41', up:false, chg:'-0.05%'},
+  {p:'AUD/USD', v:'0.6521', up:true, chg:'+0.09%'},
+  {p:'BTC/USD', v:'64,120', up:false, chg:'-1.02%'},
+  {p:'USD/CAD', v:'1.3684', up:true, chg:'+0.14%'},
+];
+function buildTicker(){
+  const track = document.getElementById('tickerTrack');
+  let html = '';
+  for(let r=0;r<2;r++){
+    pairs.forEach(x=>{
+      html += `<span class="ticker-item ${x.up?'up':'down'}"><b>${x.p}</b> ${x.v} ${x.up?'▲':'▼'} ${x.chg}</span>`;
+    });
+  }
+  track.innerHTML = html;
+}
+buildTicker();
+
+// candlestick generators
+function makeCandles(containerId, count, opts){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const heights = [];
+  let base = opts.trendUp ? 30 : 70;
+  for(let i=0;i<count;i++){
+    base += (Math.random()-0.35) * (opts.trendUp ? 14 : 10);
+    base = Math.max(18, Math.min(96, base));
+    heights.push(base);
+  }
+  el.innerHTML = heights.map((h,i)=>{
+    const bull = Math.random() > (opts.bearBias || 0.42);
+    const bodyH = Math.max(10, h * (0.55 + Math.random()*0.3));
+    const wickH = h;
+    return `<div class="candle ${bull?'bull':'bear'}">
+      <div class="wick" style="height:${wickH}%"></div>
+      <div class="body" style="height:${bodyH}%; position:absolute; bottom:${(wickH-bodyH)/2}%;"></div>
+    </div>`;
+  }).join('');
+}
+makeCandles('heroCandles', 16, {trendUp:true});
+makeCandles('aboutCandles', 22, {trendUp:true, bearBias:0.5});
+makeCandles('liveCandles', 14, {trendUp:false, bearBias:0.38});
+
+function makeDivider(id, count){
+  const el = document.getElementById(id);
+  if(!el) return;
+  let html='';
+  for(let i=0;i<count;i++){
+    const h = 8 + Math.random()*34;
+    html += `<i style="height:${h}px"></i>`;
+  }
+  el.innerHTML = html;
+}
+makeDivider('divider1', 60);
+makeDivider('divider2', 60);
+
+// scroll reveal
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.style.opacity=1; e.target.style.transform='none'; }
+    });
+  }, {threshold:0.12});
+  document.querySelectorAll('.feature-box, .why-card, .course-card, .result-card, .testimonial-card').forEach(el=>{
+    el.style.opacity=0; el.style.transform='translateY(16px)'; el.style.transition='opacity .5s ease, transform .5s ease';
+    io.observe(el);
+  });
+}
+</script>
 </body>
-
 </html>

@@ -1,24 +1,34 @@
 # RA Trading Academy Website
 
-A responsive, multi-page static website starter for GitHub Pages.
+A responsive static website built for GitHub Pages.
+
+## Included
+- Home, About, Courses, Beginner Course, Advanced Mentorship, Reviews, Blog, Contact, Privacy Policy
+- 3 educational blog articles
+- Supplied RA logo and 15-day masterclass poster
+- Responsive dark navy / orange / gold theme
+- WhatsApp click-to-chat links, click-to-call, email, Instagram, Google review link, map embed
+- Page titles, meta descriptions, basic EducationalOrganization schema, robots.txt, sitemap.xml
 
 ## Publish on GitHub Pages
-1. Download and unzip this folder.
-2. Upload all files in this folder to the root of your `ra-trading-academy` GitHub repository (replace the starter `index.html` and add the other files).
-3. In repository **Settings → Pages**, choose **Deploy from a branch**, branch `main`, folder `/(root)`, then Save.
-4. Wait for the Pages build to finish.
+1. Download and extract this ZIP.
+2. Upload the **contents** of this folder into the root of your GitHub repository (not the enclosing folder).
+3. Ensure `index.html` is at the repository root.
+4. Commit to the branch/folder configured in Settings → Pages.
+5. Wait for the Pages deployment to finish, then open the published URL.
 
-## IMPORTANT: personalize before launch
-Search and replace these placeholders across the files:
-- `91YOURNUMBER` / `YOURNUMBER` → WhatsApp number with country code, digits only (no `+`, spaces or hyphens).
-- `YOUR_EMAIL` → academy email.
-- `YOUR-GITHUB-USERNAME.github.io/YOUR-REPO` → your actual GitHub Pages base URL (used in canonical tags, sitemap and robots.txt).
-- Replace testimonial placeholders with genuine student feedback only, with permission.
-- Confirm actual course curriculum, fees, duration, schedule and delivery format before advertising them.
-- Add your real logo, trainer bio, social links and business details.
+## Details currently configured
+- Phone / WhatsApp: +91 96654 20707
+- Email: vishvajeetmane07@gmail.com
+- Address: Rajlaxmi Chambers, Bus Route, B-1, 10th Ln, Poorvarang, Mahalaxminagar, Rajarampuri, Kolhapur, Maharashtra 416008
+- Google reviews: https://share.google/qx6wqi4s95EcHeoCE
+- Instagram: https://www.instagram.com/ra_trading_academy/
 
-## Notes
-- The contact form opens WhatsApp with the user's details. It does not store submissions or send them automatically.
-- The site is static HTML/CSS/JS and works on GitHub Pages without a backend.
-- Google Fonts are loaded externally; the site falls back to system fonts if unavailable.
-- Forex trading is risky. No profits or outcomes are promised.
+## Important before publishing
+- The Google share link could not be independently opened during site preparation, so the Reviews page links visitors to your provided Google destination rather than reproducing review text or ratings.
+- Confirm the Google review URL opens the intended business profile.
+- Confirm batch dates, course fees, teaching format, and contact details.
+- Replace/add only genuine student testimonials, with permission.
+- Review the privacy policy against your actual data practices.
+- Update the sitemap URL if you change your GitHub Pages address or add a custom domain.
+- Educational content is not financial advice. Forex and leveraged trading carry risk; no profits are guaranteed.

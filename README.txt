@@ -32,3 +32,13 @@ A responsive static website built for GitHub Pages.
 - Review the privacy policy against your actual data practices.
 - Update the sitemap URL if you change your GitHub Pages address or add a custom domain.
 - Educational content is not financial advice. Forex and leveraged trading carry risk; no profits are guaranteed.
+
+UPDATED VERSION NOTES
+- Blog page and blog links removed as requested.
+- Days 7–9 renamed to Live Market Setup.
+- Hero promo card straightened and image fit adjusted to prevent cropping.
+- Instagram updated to @vishvaajeetmane.
+- About section updated with Google review attribution/link.
+- Logo background made transparent and emblem cropped; HTML wordmark remains readable.
+
+Upload the contents of this folder (including the assets folder) to the root of the ratradingacademy/ra-trading-academy repository, replacing the older files, then commit to the branch configured in GitHub Pages.
